@@ -2,6 +2,10 @@
 
 cmake_minimum_required(VERSION 3.13)
 
+set(PICO_BOARD pico_w)
+set(WIFI_SSID "Airtel_abhi_home")
+set(WIFI_PASSWORD "504296504296")
+
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 
@@ -21,12 +25,13 @@ set(PICO_CXX_ENABLE_RTTI 1)
 # Initialise the Pico SDK
 pico_sdk_init()
 
-aux_source_directory(. DIR_SRCS)
+#aux_source_directory(. DIR_SRCS)
 
 # Add executable. Default name is the project name, version 0.1
 
 add_executable(pico-pwm-audio ${DIR_SRCS}
-        "src/audio.cpp"        
+#        "src/audio.cpp"
+        "picow_tcp_server.c"       
 )
 
 include_directories(pico-pwm-audio 
@@ -44,6 +49,7 @@ target_link_libraries(pico-pwm-audio pico_stdlib)
 
 # Add any user requested libraries
 target_link_libraries(pico-pwm-audio
+        pico_cyw43_arch_lwip_poll
         hardware_dma
         hardware_pio
         hardware_timer
